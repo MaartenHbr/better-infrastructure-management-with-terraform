@@ -8,6 +8,11 @@ terraform {
   }
   backend "s3" {
     // TO DO: configure this correctly after setting up the remote backend
+    bucket = "better-infrastructure-management-with-terraform-151"
+    key    = "terraform.tfstate"
+    region = "eu-west-1"
+    profile = "academy"
+    dynamodb_table = "app-state-151"
   }
 }
 

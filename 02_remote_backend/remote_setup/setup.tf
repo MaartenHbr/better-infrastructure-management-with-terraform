@@ -41,6 +41,11 @@ resource "aws_dynamodb_table" "terraform_state_lock" {
   hash_key       = "LockID"
 
   // TO DO: complete this resource block!
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+  
 }
 
 resource "random_integer" "student_id" {
