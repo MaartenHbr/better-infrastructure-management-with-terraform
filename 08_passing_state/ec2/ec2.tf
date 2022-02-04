@@ -5,11 +5,15 @@ resource "aws_instance" "app_instance" {
   security_groups             = [aws_security_group.instance.name]
   user_data                   = <<EOF
     #!/bin/bash
-    db_address="${aws_db_instance.postgresdb.address}"
-    db_port="${aws_db_instance.postgresdb.port}"
+    db_address="${data.aws_ssm_parameter.postgresdb.address}"
+    db_port="${data.aws_ssm_parameter.postgresdb.port}"
     echo "Hello, World. DB is at $db_address:$db_port" >> index.html
     nohup busybox httpd -f -p "${var.server_port}" &
     EOF
+}
+
+data "aws_ssm_parameter" "postgresdb" {
+  name = "postgresdb"
 }
 
 data "aws_ami" "ubuntu" {
